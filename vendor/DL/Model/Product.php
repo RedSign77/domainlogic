@@ -12,33 +12,24 @@ use DL\Strategy\RecognitionStrategy;
 use DL\Strategy\CompleteRecognitionStrategy;
 use DL\Strategy\ThreeWayRecognitionStrategy;
 
-class Product
+
+class Product extends \DL\Mapper\Product
 {
-    private $name, $recognitionStrategy;
-
-    public function __construct($name, RecognitionStrategy $recognitionStrategy)
-    {
-        $this->name = $name;
-        $this->recognitionStrategy = $recognitionStrategy;
+    public function __construct($sku, RecognitionStrategy $recognitionStrategy) {
+        parent::__construct($sku, $recognitionStrategy);
     }
 
-    public static function newWordProcessor($name)
-    {
-        return new self($name, new CompleteRecognitionStrategy()); // különböző stratégiák alapján példányosítjuk a termékünket
+    public static function newWordProcessor($sku) {
+        return new self($sku, new CompleteRecognitionStrategy()); // különböző stratégiák alapján példányosítjuk a termékünket
+    }
+    public static function newSpreadSheet($sku) {
+        return new self($sku, new ThreeWayRecognitionStrategy(60,90));
+    }
+    public static function newDatabase($sku) {
+        return new self($sku, new ThreeWayRecognitionStrategy(30,60));
     }
 
-    public static function newSpreadSheet($name)
-    {
-        return new self($name, new ThreeWayRecognitionStrategy(60, 90));
-    }
-
-    public static function newDatabase($name)
-    {
-        return new self($name, new ThreeWayRecognitionStrategy(30, 60));
-    }
-
-    public function calculateRevenueRecognitions(Contract $contract)
-    { // az adott termékre vonatkozó bevételeket számolja ki
-        $this->recognitionStrategy->calculateRevenueRecognitions($contract);
+    public function calculateRevenueRecognitions(Contract $contract)  { // az adott termékre vonatkozó bevételeket számolja ki
+        $this->strategy->calculateRevenueRecognitions($contract);
     }
 }

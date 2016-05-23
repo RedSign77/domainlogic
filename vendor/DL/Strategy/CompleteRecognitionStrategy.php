@@ -11,7 +11,7 @@ namespace DL\Strategy;
 use DL\Model\RevenueRecognition;
 use DL\Model\Contract;
 
-class CompleteRecognitionStrategy
+class CompleteRecognitionStrategy extends RecognitionStrategy
 {
     public function calculateRevenueRecognitions(Contract $contract) {
         $contract->addRevenueRecognition(new RevenueRecognition($contract->getRevenue(), $contract->getWhenSigned()));

@@ -11,7 +11,7 @@ namespace DL\Strategy;
 use DL\Model\RevenueRecognition;
 use DL\Model\Contract;
 
-class ThreeWayRecognitionStrategy
+class ThreeWayRecognitionStrategy extends RecognitionStrategy
 {
     private $firstRecognitionOffset, $secondRecognitionOffset;
 
