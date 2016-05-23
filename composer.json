@@ -1,0 +1,17 @@
+{
+  "name": "Aion/Domain Logic",
+  "description": "Domain Logic pattern sample",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "Zoltán Németh",
+      "email": "zoltan.nemeth@aionhill.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "DP\\": "vendor/DL"
+    }
+  }
+}

@@ -1,0 +1,9 @@
+composer.phar
+/vendor/composer/
+.idea
+.git
+*.iml
+out
+gen
+
+
