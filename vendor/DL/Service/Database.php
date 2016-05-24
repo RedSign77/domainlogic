@@ -11,7 +11,7 @@ namespace DL\Service;
 use DL\Model\Singleton;
 use \PDO;
 
-class DatabaseService extends Singleton
+class Database extends Singleton
 {
 
     private $db;

@@ -5,5 +5,12 @@
 
 include_once __DIR__ . '/vendor/autoload.php';
 
-$words = \DL\Model\Product::newWordProcessor(1);
-var_dump($words);
+$db = \DL\Service\Database::getInstance()->getConnection();
+
+$recognationService = new \DL\Service\RecognitionService($db);
+
+
+
+$contracts = $recognationService->recognizedRevenue(10003, '2016-05-24');
+
+

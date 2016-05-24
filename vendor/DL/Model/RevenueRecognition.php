@@ -11,7 +11,8 @@ namespace DL\Model;
 
 class RevenueRecognition
 {
-    private $amount, $date;
+    private $amount;
+    private $date;
 
     public function __construct($amount, $date)
     {

@@ -8,16 +8,13 @@
 
 namespace DL\Service;
 
+use DL\Service\Database;
 
 class RecognitionService
 {
 
-    private static $findRecognitionStatement = 'SELECT amount FROM revenueRecognitions WHERE contract = :contract AND recognizedOn <= :date';
+    private static $findRecognitionStatement = 'SELECT amount FROM revenue_recognitions WHERE contract = :contract AND recognizedOn <= :date';
 
-    public function __construct(\PDO $db)
-    {
-        $this->db = $db;
-    }
 
     public function recognizedRevenue($contractNumber, $asOf)
     {
@@ -31,11 +28,14 @@ class RecognitionService
 
     public function findRecognitionsFor($contractNumber, $asOf)
     { // ez fog kapcsolatba lépni az adatbázissal
-        $statement = $this->db->createStatement(self::$findRecognitionStatement);
-        $result = $statement->execute(array(
+        $db = Database::getInstance()->getConnection();
+        $statement = $db->prepare(self::$findRecognitionStatement);
+        $statement->execute(array(
             'contract' => $contractNumber, 'date' => $asOf
         ));
+        $result = $statement->fetchAll();
         return $result; // visszatérünk a leszűrt result settel
     }
+
 
 }
