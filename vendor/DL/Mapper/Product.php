@@ -3,8 +3,7 @@
  * Data Mapper
  */
 namespace DL\Mapper;
-use DL\Service\DatabaseService;
-use DL\Strategy\RecognitionStrategy;
+use DL\Service\Database;
 use \PDO;
 
 /**
@@ -25,7 +24,7 @@ class Product{
 
     private function load($sku)
     {
-        $db = DatabaseService::getInstance()->getConnection();
+        $db = Database::getInstance()->getConnection();
         $result = $db->prepare('SELECT * FROM product WHERE sku="'.$sku.'"');
         $result->execute();
         $data = $result->fetch(PDO::FETCH_ASSOC);

@@ -28,4 +28,13 @@ class ThreeWayRecognitionStrategy extends RecognitionStrategy
         $contract->addRevenueRecognition(new RevenueRecognition($allocation[1], $contract->getWhenSigned()->add($this->firstRecognitionOffset)));
         $contract->addRevenueRecognition(new RevenueRecognition($allocation[2], $contract->getWhenSigned()->add($this->secondRecognitionOffset)));
     }
+
+    public function __toString()
+    {
+        $ret = '<br>'.get_class($this);
+        $ret .= '<br> - First offset: '.$this->firstRecognitionOffset;
+        $ret .= '<br> - Second offset: '.$this->secondRecognitionOffset;
+        return $ret;
+    }
+
 }

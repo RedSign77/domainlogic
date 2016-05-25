@@ -8,7 +8,6 @@
 
 namespace DL\Service;
 
-use DL\Service\Database;
 
 class RecognitionService
 {
@@ -18,23 +17,23 @@ class RecognitionService
 
     public function recognizedRevenue($contractNumber, $asOf)
     {
-        $result = $this->findRecognitionsFor($contractNumber, $asOf); // továbbproxyzzuk a kérést
+        $result = $this->findRecognitionsFor($contractNumber, $asOf); // Use the Proxy pattern
         $amount = 0;
         foreach ($result as $record) {
-            $amount += $record['amount']; // végigiterálunk a sorokon és az értékeket összeadjuk
+            $amount += $record['amount']; // Business logic
         }
         return $amount;
     }
 
     public function findRecognitionsFor($contractNumber, $asOf)
-    { // ez fog kapcsolatba lépni az adatbázissal
-        $db = Database::getInstance()->getConnection();
+    {
+        $db = Database::getInstance()->getConnection(); // Get the database connection object (PDO)
         $statement = $db->prepare(self::$findRecognitionStatement);
         $statement->execute(array(
             'contract' => $contractNumber, 'date' => $asOf
         ));
         $result = $statement->fetchAll();
-        return $result; // visszatérünk a leszűrt result settel
+        return $result; // Return filtered result
     }
 
 
