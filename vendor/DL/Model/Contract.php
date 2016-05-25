@@ -8,6 +8,12 @@
 
 namespace DL\Model;
 
+/**
+ * Domain Logic: Domain Model example
+ *
+ * Class Contract
+ * @package DL\Model
+ */
 class Contract
 {
     private $product, $revenue, $whenSigned, $id;
@@ -32,22 +38,22 @@ class Contract
 
     public function addRevenueRecognition(RevenueRecognition $revenueRecognition)
     {
-        $this->revenueRecognitions[] = $revenueRecognition; // hozzácsapjuk a bevételi kimutatásokat
+        $this->revenueRecognitions[] = $revenueRecognition; // Add Revenue Recognitions
     }
 
     public function calculateRecognitions()
     {
-        $this->product->calculateRevenueRecognitions($this); // továbbítjuk a kérést a produkt osztály felé
+        $this->product->calculateRevenueRecognitions($this); // Proxy pattern
     }
 
     public function recognizedRevenue($date)
-    { // ez számolja ki, hogy mennyi bevételünk származott az adott időpontig
+    { // Recognize Revenue
         $result = 0;
         foreach ($this->revenueRecognitions as $r) {
             if ($r->isRecognizableOf($date)) {
                 $result += $r->getAmount();
             }
         }
-        return $result; // és visszatér az összesített értékkel
+        return $result;
     }
 }
