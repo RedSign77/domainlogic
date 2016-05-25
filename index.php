@@ -14,3 +14,4 @@ $contracts = $recognationService->recognizedRevenue(10003, '2016-05-24');
 $product = new \DL\Mapper\Product(1, new \DL\Strategy\ThreeWayRecognitionStrategy(30, 70));
 
 echo $product;
+

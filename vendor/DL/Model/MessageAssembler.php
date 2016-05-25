@@ -33,21 +33,22 @@ class MessageAssembler
         return $this->users;
     }
 
-    public function getMessageByUserIdAndLastSyncDate($userId, $lastSyncDate)
-    {
-        $results = $this->getMessagesModel()->findByUserFromDate($userId, $lastSyncDate); // Üzenetek lekérdezés - proxy pattern
-        $messages = array();
-        foreach ($results as $record) {
-            $record['sender'] = $this->getUserDTO($record['senderId']); // lekérjük a hozzá tartozó UserDTO-kat
-            $record['receiver'] = $this->getUserDTO($record['receiverId']);
-            $messages[] = new MessageDTO($record); // példányosítunk egy DTO-t és betoljuk a tömbbe
-        }
-        return $messages; // visszaadjuk a tömböt
-    }
-
     private function getUserDTO($userId)
-    { // szimplán az ID alapján készítünk egy UserDTO objektumot
+    {
         $record = $this->getUsersModel()->getUserById($userId);
         return new UserDTO($record['id'], $record['name'], $record['email']); // ez egy nagyon egyszerű DTO
     }
+
+    public function getMessageByUserIdAndLastSyncDate($userId, $lastSyncDate)
+    {
+        $results = $this->getMessagesModel()->findByUserFromDate($userId, $lastSyncDate); // Get messages - proxy pattern
+        $messages = array();
+        foreach ($results as $record) {
+            $record['sender'] = $this->getUserDTO($record['sender']); // Get joined UserDTO-s
+            $record['receiver'] = $this->getUserDTO($record['receiver']);
+            $messages[] = new MessageDTO($record); // Add MessageDTO
+        }
+        return $messages;
+    }
+
 }
