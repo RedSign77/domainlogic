@@ -16,19 +16,32 @@ namespace DL\Model;
  */
 class Contract
 {
-    private $product, $revenue, $whenSigned, $id;
+    private $product, $whenSigned;
     private $revenueRecognitions = array();
 
-    public function __construct(Product $product, $revenue, $whenSigned)
+    public function __construct(Product $product, $whenSigned)
     {
         $this->product = $product;
-        $this->revenue = $revenue;
         $this->whenSigned = $whenSigned;
     }
 
-    public function getRevenue()
+    public function allocate($amount, $by) {
+        $lowResult = round($amount / $by, 0, PHP_ROUND_HALF_DOWN);
+        $highResult = $lowResult + 1;
+        $remainder = $amount % $by;
+        $results = array();
+        for ($i = 0; $i < $remainder; $i++) {
+            $results[$i] = $highResult;
+        }
+        for ($i = $remainder; $i < $by; $i++) {
+            $results[$i] = $lowResult;
+        }
+        return $results;
+    }
+
+    public function getProduct()
     {
-        return $this->revenue;
+        return $this->product;
     }
 
     public function getWhenSigned()
@@ -50,7 +63,7 @@ class Contract
     { // Recognize Revenue
         $result = 0;
         foreach ($this->revenueRecognitions as $r) {
-            if ($r->isRecognizableOf($date)) {
+            if ($r->isRecognizableBy($date)) {
                 $result += $r->getAmount();
             }
         }

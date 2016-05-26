@@ -14,6 +14,6 @@ use DL\Model\Contract;
 class CompleteRecognitionStrategy extends RecognitionStrategy
 {
     public function calculateRevenueRecognitions(Contract $contract) {
-        $contract->addRevenueRecognition(new RevenueRecognition($contract->getRevenue(), $contract->getWhenSigned()));
+        $contract->addRevenueRecognition(new RevenueRecognition($contract->getProduct()->getAmount(), $contract->getWhenSigned()));
     }
 }

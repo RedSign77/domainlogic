@@ -14,6 +14,8 @@ class Product{
 
     protected $sku;
     protected $name;
+    protected $amount;
+    protected $updatedAt;
     protected $strategy;
 
     public function __construct($sku, $strategy)
@@ -38,6 +40,21 @@ class Product{
 
     private function setName($name) {
         $this->name = $name;
+    }
+
+    private function setAmount($amount)
+    {
+        $this->amount = $amount;
+    }
+
+    private function setUpdated_at($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+    }
+
+    public function getAmount()
+    {
+        return $this->amount;
     }
 
     public function getSKU()
