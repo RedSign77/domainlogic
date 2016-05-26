@@ -24,7 +24,6 @@ class ThreeWayRecognitionStrategy extends RecognitionStrategy
     public function calculateRevenueRecognitions(Contract $contract)
     {
         $allocation = $contract->allocate($contract->getProduct()->getAmount(), 3);
-        var_dump($allocation);
         $contract->addRevenueRecognition(new RevenueRecognition($allocation[0], $contract->getWhenSigned()));
         $contract->addRevenueRecognition(new RevenueRecognition($allocation[1], $this->getNextDate($contract->getWhenSigned(), $this->firstRecognitionOffset)));
         $contract->addRevenueRecognition(new RevenueRecognition($allocation[2], $this->getNextDate($contract->getWhenSigned(), $this->secondRecognitionOffset)));
