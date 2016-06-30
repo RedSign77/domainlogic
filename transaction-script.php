@@ -3,7 +3,7 @@
  * Domain Logic simple example
  */
 include_once __DIR__ . '/vendor/autoload.php';
-if (!isset($_GET['contractId'])) {
+if (!array_key_exists('contractId', $_GET)) {
     die('Please give a valid <a href="?contractId=10000">Contract number</a>!');
 }
 $contractId = (int)$_GET['contractId'];
